@@ -1,5 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
+import Header from './components/Header'
+//import Courses from './components/Courses'
 import './App.css';
 
 
@@ -17,11 +19,10 @@ getData =()=>{
 
     return (
       <div className="App">
-        <header className="App-header">
+      <Header></Header>
           <img src={logo} className="App-logo" alt="logo" />
       
          
-        </header>
       </div>
     );
 
