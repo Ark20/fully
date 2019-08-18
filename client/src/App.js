@@ -1,10 +1,16 @@
 import React from 'react';
 import logo from './logo.svg';
 import Header from './components/Header'
-//import Courses from './components/Courses'
+import Courses from './components/Courses'
 import Sign_in from './components/Sign_in'
+import CreateCourse from './components/CreateCourse'
 import './App.css';
-//comment
+import {
+    BrowserRouter,
+    Route,
+    Switch
+} from 'react-router-dom'
+
 
 export default class App extends React.Component {
 
@@ -19,12 +25,18 @@ getData =()=>{
   render(){
 
     return (
+      <BrowserRouter>
+
       <div className="App">
       <Header></Header>
           <img src={logo} className="App-logo" alt="logo" />
-      
+      <Switch>
+      <Route></Route>
+
+      </Switch>
          
       </div>
+   </BrowserRouter>
     );
 
   }
