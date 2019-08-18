@@ -30,9 +30,10 @@ getData =()=>{
       <div className="App">
       <Header></Header>
           <img src={logo} className="App-logo" alt="logo" />
+          <Courses></Courses>
+
       <Switch>
       <Route></Route>
-
       </Switch>
          
       </div>
