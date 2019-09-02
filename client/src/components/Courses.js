@@ -1,11 +1,12 @@
-import React, {Component} from 'react'
+import React from 'react'
 
 //export default class Courses extends Component{
 const Courses = props => {
+    console.log(props)
            //map over items in array, create divs for each with info from each item 
-           var courseList;
+    var courseList;
     courseList = props.data.map((course,index) =>
-    <div className="grid-33"><a className="course--module course--link" href="course-detail.html">
+    <div className="grid-33" key="{index}"><a className="course--module course--link" href="course-detail.html">
               <h4 className="course--label">Course</h4>
               <h3 className="course--title">{course.title}</h3>
             </a></div>
@@ -14,7 +15,7 @@ const Courses = props => {
 
     return(
         <div className="bounds">
-     
+            {courseList}
         </div>
 
     )

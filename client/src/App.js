@@ -46,7 +46,7 @@ getData =()=>{
       <div className="App">
       <Header></Header>
           <img src={logo} className="App-logo" alt="logo" />
-          <Courses data={this.state.courses}></Courses>
+          <Courses data = {this.state.holder}></Courses>
 
       <Switch>
       <Route></Route>
