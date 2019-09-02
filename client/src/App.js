@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import Header from './components/Header'
 import Courses from './components/Courses'
 //import Sign_in from './components/Sign_in'
@@ -45,7 +44,6 @@ getData =()=>{
 
       <div className="App">
       <Header></Header>
-          <img src={logo} className="App-logo" alt="logo" />
           <Courses data = {this.state.holder}></Courses>
 
       <Switch>
