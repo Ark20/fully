@@ -2,8 +2,8 @@ import React from 'react';
 import logo from './logo.svg';
 import Header from './components/Header'
 import Courses from './components/Courses'
-import Sign_in from './components/Sign_in'
-import CreateCourse from './components/CreateCourse'
+//import Sign_in from './components/Sign_in'
+//import CreateCourse from './components/CreateCourse'
 import './App.css';
 import {
     BrowserRouter,
@@ -14,13 +14,29 @@ import {
 
 export default class App extends React.Component {
 
+  constructor(){
+    super()
+    this.state = {
+      holder:[]
+    }
+  
+  }
+
 componentDidMount(){
   this.getData()
 }
 
 getData =()=>{
   fetch(`http://localhost:5000/api/courses`).then(response=> response.json())
-  .then(response => console.log(response))
+  .then(response =>{ 
+     this.setState({
+       holder: response
+     }) 
+    console.log(this.state.holder)
+  })
+  
+  //.then(response => console.log(response))
+
 }
   render(){
 
@@ -30,7 +46,7 @@ getData =()=>{
       <div className="App">
       <Header></Header>
           <img src={logo} className="App-logo" alt="logo" />
-          <Courses></Courses>
+          <Courses data={this.state.courses}></Courses>
 
       <Switch>
       <Route></Route>
