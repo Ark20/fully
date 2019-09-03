@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-
+//show sign out if signed in
 export default class Header extends Component {
 
     render(){
