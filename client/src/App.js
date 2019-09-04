@@ -35,7 +35,6 @@ getData =()=>{
      this.setState({
        holder: response
      }) 
-    console.log(this.state.holder)
   })
   
   //.then(response => console.log(response))
@@ -52,8 +51,8 @@ getData =()=>{
       <Switch>
       <Route exact path ="/courses" component={() => <Courses data ={this.state.holder}/>}></Route>
       <Route path ="/courses/create" component={() => <CreateCourse />}></Route>
-      <Route path ="/courses/:id/update" component={() => <UpdateCourse />}></Route>
-      <Route path ="/courseDetail" component={() => <CourseDetail data ={this.state.holder}/>}></Route>
+      <Route path ="/courses/:id/update" component={({match}) => <UpdateCourse />}></Route>
+      <Route path ="/courses/:id" component={({match}) => <CourseDetail id={match.params.id} />}></Route>
       <Route path ="/courses/signin" component={() => <Sign_in />}></Route>
       <Route path ="/courses/signup" component={() => <Sign_up />}></Route>
       <Route path ="/courses/signout" component={() => <UserSignOut />}></Route>
