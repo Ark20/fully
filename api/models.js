@@ -4,7 +4,6 @@
 var mongoose = require("mongoose")//require mongoose module
 //connect to database configured 
 mongoose.connect("mongodb://localhost:27017/fsjstd-restapi")
-
 var db = mongoose.connection
 
 db.on("error", function(err){

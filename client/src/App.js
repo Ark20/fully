@@ -11,10 +11,31 @@ import './App.css';
 import {
     BrowserRouter,
     Route,
-    Switch
+    Switch,
+    Redirect
 } from 'react-router-dom'
+import { Base64 } from 'js-base64';
 
+/** 
 
+function PrivateRoute({ children, ...rest }){
+  return (
+    <Route render={({ location }) => 
+    fakeAuth.isauthed ? (
+      children
+    ) : (
+      <Redirect
+        to={{
+          pathname: "/login",
+          state: { from: location }
+        }}
+      />
+    )
+  }/>
+  )
+
+}
+*/
 export default class App extends React.Component {
 
   constructor(){
@@ -27,6 +48,34 @@ export default class App extends React.Component {
 
 componentDidMount(){
   this.getData()
+  this.signIn("bob","bob")
+}
+
+
+
+
+
+signIn=(emailAddress,password) => {
+  let email = emailAddress; 
+  let pass = password;
+  //pass auth header to this call 
+  //make request to api with auth header using email and pass defined above
+  fetch(`http://localhost:5000/api/users`, {
+    headers: new Headers({
+      "Authorization": `Basic ${Base64.encode(`${email}:${pass}`)}`
+    }),
+  }).then(response => {
+    if(!response.ok) throw new Error(response.status)
+    return response.json()
+  })
+
+  //if authed store email and name to state 
+  
+}
+
+signOut=() => {
+
+  //remove current user from state 
 }
 
 getData =()=>{
