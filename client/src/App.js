@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Header from './components/Header'
 import Courses from './components/Courses'
@@ -15,6 +16,8 @@ import {
     Redirect
 } from 'react-router-dom'
 import { Base64 } from 'js-base64';
+import {Provider} from './components/Context'
+import { strict } from 'assert';
 
 /** 
 
@@ -41,14 +44,17 @@ export default class App extends React.Component {
   constructor(){
     super()
     this.state = {
-      holder:[]
+      holder:[],
+      name:"",
+      pass:""
     }
   
   }
 
 componentDidMount(){
   this.getData()
-  this.signIn("bob","bob")
+  //this.signIn("bob","bob")
+  //this.signOut()
 }
 
 
@@ -56,17 +62,25 @@ componentDidMount(){
 
 
 signIn=(emailAddress,password) => {
-  let email = emailAddress; 
-  let pass = password;
+
+
   //pass auth header to this call 
   //make request to api with auth header using email and pass defined above
   fetch(`http://localhost:5000/api/users`, {
     headers: new Headers({
-      "Authorization": `Basic ${Base64.encode(`${email}:${pass}`)}`
+      "Authorization": `Basic ${Base64.encode(`${emailAddress}:${password}`)}`
     }),
   }).then(response => {
     if(!response.ok) throw new Error(response.status)
+   
+
     return response.json()
+  }).then(response=>{
+    this.setState({
+      name:emailAddress,
+      pass:password
+    })
+    console.log(response)
   })
 
   //if authed store email and name to state 
@@ -74,7 +88,11 @@ signIn=(emailAddress,password) => {
 }
 
 signOut=() => {
-
+let boo="boo"
+  this.setState({
+    name:"nnn",
+    pass:"nnn"
+  })
   //remove current user from state 
 }
 
@@ -93,7 +111,14 @@ getData =()=>{
 
     return (
       <BrowserRouter>
-
+<Provider value={{
+  email: this.state.email,
+  pass: this.state.pass,
+  actions: {
+    signOut: this.signOut,
+    signIn: this.signIn
+  }
+}}>
       <div className="App">
       <Header></Header>
 
@@ -101,13 +126,14 @@ getData =()=>{
       <Route exact path ="/courses" component={() => <Courses data ={this.state.holder}/>}></Route>
       <Route path ="/courses/create" component={() => <CreateCourse />}></Route>
       <Route path ="/courses/:id/update" component={({match}) => <UpdateCourse />}></Route>
-      <Route path ="/courses/:id" component={({match}) => <CourseDetail id={match.params.id} />}></Route>
-      <Route path ="/courses/signin" component={() => <Sign_in />}></Route>
+      <Route exact path ="/courses/signin" component={() => <Sign_in />}></Route>
       <Route path ="/courses/signup" component={() => <Sign_up />}></Route>
       <Route path ="/courses/signout" component={() => <UserSignOut />}></Route>
+      <Route exact path ="/courses/:id" component={({match}) => <CourseDetail id={match.params.id} />}></Route>
+      
       </Switch>
          
-      </div>
+      </div></Provider>
    </BrowserRouter>
     );
 
