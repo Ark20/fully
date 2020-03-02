@@ -1,9 +1,4 @@
 import React, {Component} from 'react'
-import {
-  BrowserRouter,
-  Route,
-  Switch
-} from 'react-router-dom'
 
 
 export default class CourseDetail extends Component{
@@ -23,13 +18,14 @@ export default class CourseDetail extends Component{
 
   componentDidMount(){
 let id = this.props.id
+console.log(id)
+
 fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json())
     .then(response =>{ 
        this.setState({
          holder: response
        }) 
 
-       console.log(this.props.id)
 
     })
   }

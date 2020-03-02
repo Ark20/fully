@@ -2,11 +2,10 @@ import React from 'react'
 
 //export default class Courses extends Component{
 const Courses = props => {
-    console.log(props)
            //map over items in array, create divs for each with info from each item 
     var courseList;
     courseList = props.data.map((course,index) =>
-    <div className="grid-33" key="{index}"><a className="course--module course--link" href="/courses${id}">
+    <div className="grid-33" key="{index}"><a className="course--module course--link" href={`/courses/${props.data[index]._id}`}>
               <h4 className="course--label">Course</h4>
               <h3 className="course--title">{course.title}</h3>
             </a></div>
