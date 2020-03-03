@@ -13,11 +13,10 @@ import {
     BrowserRouter,
     Route,
     Switch,
-    Redirect
 } from 'react-router-dom'
 import { Base64 } from 'js-base64';
 import {Provider} from './components/Context'
-import { strict } from 'assert';
+//import { strict } from 'assert';
 
 /** 
 
@@ -88,7 +87,6 @@ signIn=(emailAddress,password) => {
 }
 
 signOut=() => {
-let boo="boo"
   this.setState({
     name:"nnn",
     pass:"nnn"
