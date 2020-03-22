@@ -13,31 +13,40 @@ import {
     BrowserRouter,
     Route,
     Switch,
+    Redirect,
+
 } from 'react-router-dom'
+import {
+  useHistory,
+  useLocation,
+} from 'react-router'
 import { Base64 } from 'js-base64';
 import {Provider} from './components/Context'
 //import { strict } from 'assert';
 
-/** 
 
-function PrivateRoute({ children, ...rest }){
+//private route for course creation & update 
+function PrivateRoute({ authed,children, ...rest }) {
+console.log(authed)
   return (
-    <Route render={({ location }) => 
-    fakeAuth.isauthed ? (
-      children
-    ) : (
-      <Redirect
-        to={{
-          pathname: "/login",
-          state: { from: location }
-        }}
-      />
-    )
-  }/>
-  )
+  <Route 
+    {...rest}
+    render ={()=>
+      authed ? ( //if authenticated render child component 
+        children
+      ) : (//if not redirect to signIn 
+        <Redirect
+          to={{
+            pathname:"/courses/signin"
+          }}
+        />
 
+      )
+    }  
+    />
+    )
 }
-*/
+
 export default class App extends React.Component {
 
   constructor(){
@@ -45,7 +54,8 @@ export default class App extends React.Component {
     this.state = {
       holder:[],
       name:"",
-      pass:""
+      pass:"",
+      authed:false
     }
   
   }
@@ -70,16 +80,22 @@ signIn=(emailAddress,password) => {
       "Authorization": `Basic ${Base64.encode(`${emailAddress}:${password}`)}`
     }),
   }).then(response => {
-    if(!response.ok) throw new Error(response.status)
-   
-
+    if(!response.ok){ 
+      this.setState({
+        authed: false
+      })
+      throw new Error(response.status)}
     return response.json()
   }).then(response=>{
+    
+
     this.setState({
       name:emailAddress,
-      pass:password
+      pass:password,
+      authed: true
     })
-    console.log(response)
+    //useHistory().replace(from);
+    console.log(this.state.authed)
   })
 
   //if authed store email and name to state 
@@ -89,7 +105,8 @@ signIn=(emailAddress,password) => {
 signOut=() => {
   this.setState({
     name:"nnn",
-    pass:"nnn"
+    pass:"nnn",
+    authed: false,
   })
   //remove current user from state 
 }
@@ -110,6 +127,7 @@ getData =()=>{
     return (
       <BrowserRouter>
 <Provider value={{
+  authed: this.state.authed, 
   email: this.state.email,
   pass: this.state.pass,
   actions: {
@@ -122,7 +140,7 @@ getData =()=>{
 
       <Switch>
       <Route exact path ="/courses" component={() => <Courses data ={this.state.holder}/>}></Route>
-      <Route path ="/courses/create" component={() => <CreateCourse />}></Route>
+      <PrivateRoute path="/courses/create" authed={this.state.authed}><CreateCourse/></PrivateRoute>
       <Route path ="/courses/:id/update" component={({match}) => <UpdateCourse />}></Route>
       <Route exact path ="/courses/signin" component={() => <Sign_in />}></Route>
       <Route path ="/courses/signup" component={() => <Sign_up />}></Route>
