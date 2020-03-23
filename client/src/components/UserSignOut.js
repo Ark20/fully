@@ -1,5 +1,4 @@
-import React, {Component} from 'react'
-import { Consumer } from './Context'
+import React from 'react'
 import { Redirect}  from 'react-router-dom'
 
 function UserSignOut({signOut}){

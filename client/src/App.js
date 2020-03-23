@@ -3,8 +3,8 @@ import React from 'react';
 import Header from './components/Header'
 import Courses from './components/Courses'
 import CourseDetail from './components/CourseDetail'
-import Sign_in from './components/UserSignIn'
-import Sign_up from './components/UserSignUp'
+import SignIn from './components/UserSignIn'
+import SignUp from './components/UserSignUp'
 import UserSignOut from './components/UserSignOut'
 import UpdateCourse from './components/UpdateCourse'
 import CreateCourse from './components/CreateCourse'
@@ -143,8 +143,8 @@ getData =()=>{
       <Route exact path ="/courses" component={() => <Courses data ={this.state.holder}/>}></Route>
       <PrivateRoute path="/courses/create" authed={this.state.authed}><CreateCourse/></PrivateRoute>
       <PrivateRoute path="/courses/:id/update" authed={this.state.authed}><UpdateCourse/></PrivateRoute>
-      <Route exact path ="/courses/signin" component={() => <Sign_in />}></Route>
-      <Route path ="/courses/signup" component={() => <Sign_up />}></Route>
+      <Route exact path ="/courses/signin" component={() => <SignIn />}></Route>
+      <Route path ="/courses/signup" component={() => <SignUp />}></Route>
       <Route path ="/courses/signout" component={() => <UserSignOut signOut = {this.signOut}/>}></Route>
       <Route exact path ="/courses/:id" component={({match}) => <CourseDetail id={match.params.id} />}></Route>
       
