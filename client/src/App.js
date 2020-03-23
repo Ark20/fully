@@ -87,7 +87,7 @@ signIn=(emailAddress,password) => {
       throw new Error(response.status)}
     return response.json()
   }).then(response=>{
-    
+
     cookies.set("authed", true, {path: "/"})
     this.setState({
       name:emailAddress,

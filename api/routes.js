@@ -166,6 +166,7 @@ req.course.remove()
     //get list of users 
     console.log()
     res.json(req.currentUser)
+
     
     })
     
