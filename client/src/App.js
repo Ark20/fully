@@ -16,23 +16,23 @@ import {
     Redirect,
 
 } from 'react-router-dom'
-import {
-  useHistory,
-  useLocation,
-} from 'react-router'
+
 import { Base64 } from 'js-base64';
 import {Provider} from './components/Context'
+import Cookies from 'js-cookie'
+let cookies = Cookies
+
 //import { strict } from 'assert';
 
 
 //private route for course creation & update 
 function PrivateRoute({ authed,children, ...rest }) {
-console.log(authed)
+console.log(cookies.get("authed"))
   return (
   <Route 
     {...rest}
     render ={()=>
-      authed ? ( //if authenticated render child component 
+      cookies.get("authed") ? ( //if authenticated render child component 
         children
       ) : (//if not redirect to signIn 
         <Redirect
@@ -55,7 +55,7 @@ export default class App extends React.Component {
       holder:[],
       name:"",
       pass:"",
-      authed:false
+      authed: cookies.get("authed")
     }
   
   }
@@ -88,14 +88,13 @@ signIn=(emailAddress,password) => {
     return response.json()
   }).then(response=>{
     
-
+    cookies.set("authed", true, {path: "/"})
     this.setState({
       name:emailAddress,
-      pass:password,
-      authed: true
+      pass:password
     })
     //useHistory().replace(from);
-    console.log(this.state.authed)
+    console.log()
   })
 
   //if authed store email and name to state 
@@ -108,6 +107,8 @@ signOut=() => {
     pass:"nnn",
     authed: false,
   })
+  cookies.remove('authed')
+
   //remove current user from state 
 }
 
@@ -141,10 +142,10 @@ getData =()=>{
       <Switch>
       <Route exact path ="/courses" component={() => <Courses data ={this.state.holder}/>}></Route>
       <PrivateRoute path="/courses/create" authed={this.state.authed}><CreateCourse/></PrivateRoute>
-      <Route path ="/courses/:id/update" component={({match}) => <UpdateCourse />}></Route>
+      <PrivateRoute path="/courses/:id/update" authed={this.state.authed}><UpdateCourse/></PrivateRoute>
       <Route exact path ="/courses/signin" component={() => <Sign_in />}></Route>
       <Route path ="/courses/signup" component={() => <Sign_up />}></Route>
-      <Route path ="/courses/signout" component={() => <UserSignOut />}></Route>
+      <Route path ="/courses/signout" component={() => <UserSignOut signOut = {this.signOut}/>}></Route>
       <Route exact path ="/courses/:id" component={({match}) => <CourseDetail id={match.params.id} />}></Route>
       
       </Switch>

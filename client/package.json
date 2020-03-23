@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "js-base64": "^2.5.2",
+    "js-cookie": "^2.2.1",
     "react": "^16.9.0",
+    "react-cookie": "^4.0.3",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.1.0"
