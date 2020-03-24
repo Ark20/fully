@@ -1,20 +1,34 @@
 import React, {Component} from 'react'
 import Cookies from 'js-cookie'
+import { Base64 } from 'js-base64';
+
 let cookies = Cookies
 
 
 export default class CourseDetail extends Component{
-  
 
   
   constructor(){
     super()
+    this.emailAddress= cookies.get("name")
+    this.password= cookies.get("pass")
+
+    this.delete = function (id) {
+      console.log(this.emailAddress)
+      console.log(this.password)
+
+             fetch(`http://localhost:5000/api/courses/${id}`, {
+              method: 'delete',
+              headers: new Headers({
+                "Authorization": `Basic ${Base64.encode(`${this.emailAddress}:${this.password}`)}`
+              }),
+            },)
+    }
     this.state = {
       holder:[]
     }
   
   }
-
 
 
 
@@ -25,7 +39,8 @@ console.log(id)
 fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json())
     .then(response =>{ 
        this.setState({
-         holder: response
+         holder: response,
+         id: id
        }) 
 
 
@@ -34,13 +49,12 @@ fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json()
 
 
 
-
     render(){
     return(
       <div>
         <div class="actions--bar">
           <div class="bounds">{ cookies.get("authed") ?
-            <div class="grid-100"><span><a class="button" href="/courses">Update Course</a><a class="button" href="#">Delete Course</a></span><a
+            <div class="grid-100"><span><a class="button" href={`/courses/${this.state.id}/update`}>Update Course</a><button class="button" onClick={()=> this.delete(this.state.id)}>Delete Course</button></span><a
                 class="button button-secondary" href="/courses">Return to List</a></div> : <span></span>
           }
           </div>

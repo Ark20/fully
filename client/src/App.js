@@ -89,10 +89,14 @@ signIn=(emailAddress,password) => {
   }).then(response=>{
 
     cookies.set("authed", true, {path: "/"})
+    cookies.set("name", emailAddress, {path: "/"})
+    cookies.set("pass", password, {path: "/"})
+
     this.setState({
       name:emailAddress,
       pass:password
     })
+    
     //useHistory().replace(from);
     console.log()
   })
