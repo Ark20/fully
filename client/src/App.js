@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Header from './components/Header'
 import Courses from './components/Courses'
@@ -20,6 +19,7 @@ import {
 import { Base64 } from 'js-base64';
 import {Provider} from './components/Context'
 import Cookies from 'js-cookie'
+import { strict } from 'assert';
 let cookies = Cookies
 
 //import { strict } from 'assert';
@@ -150,7 +150,7 @@ getData =()=>{
       <PrivateRoute path="/courses/create" authed={this.state.authed}><CreateCourse/></PrivateRoute>
       <PrivateRoute path="/courses/:id/update" authed={this.state.authed}><UpdateCourse/></PrivateRoute>
       <Route exact path ="/courses/signin" component={() => <SignIn />}></Route>
-      <Route path ="/courses/signup" component={() => <SignUp />}></Route>
+      <Route exact path ="/courses/signup" component={() => <SignUp />}></Route>
       <Route path ="/courses/signout" component={() => <UserSignOut signOut = {this.signOut}/>}></Route>
       <Route exact path ="/courses/:id" component={({match}) => <CourseDetail id={match.params.id} />}></Route>
       

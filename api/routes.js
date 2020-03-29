@@ -164,7 +164,6 @@ req.course.remove()
     res.status(200)
     
     //get list of users 
-    console.log()
     res.json(req.currentUser)
 
     
@@ -174,10 +173,14 @@ req.course.remove()
     router.post("/users",function(req,res,next){
         
     var user = new User(req.body)
+    console.log(req.body)
     
     if(!user.password){
+        console.log(user)
+
         let err = new Error("no pass")
         err.status  = 409;
+        //err.message = req.body
         return next(err)
 
     }
