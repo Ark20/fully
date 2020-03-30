@@ -5,35 +5,63 @@ export default class UserSignIn extends Component{
   constructor(props) {
 
     super(props)
-    this.state = {}
+    this.state = {
+      matching:true
+    }
 
     this.handleInput = this.handleInput.bind(this)
+    this.pwCheck = this.pwCheck.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+
+
   }
+ 
   handleSubmit(e){
-    e.prevemtDefault()
 
-    fetch("http://localhost:5000/api/users",{
-      method: "POST",
-      body: {
-        firstName:this.state.firstName,
-        lastName: this.state.lastName,
-        emailAddress:this.state.emailAddress,
-        passwrd: this.state.password
-      }
-    
-    })
+    e.preventDefault()
+
+const form = {"firstName":this.state.firstName,
+"lastName":this.state.lastName, "password":this.state.password, "emailAddress":this.state.emailAddress}
+console.log(form)
+
+console.log(this.state)
+fetch("http://localhost:5000/api/users",{
+  method:'POST',
+  headers: { 'Content-type': 'application/json' },
+  body: JSON.stringify(form)
+}
+)
+window.location="/courses" 
+
 
   }
+
   handleInput(e){
     const target = e.target
     const name = target.name
     const value = target.value
     
+    
     this.setState({
       [name]: value
 
     })
-    console.log(this.state)
+  }
+//action="http://localhost:5000/api/users" method="post" 
+  pwCheck(e){
+    if(this.state.password){
+  if(!(this.state.password ==e.target.value)){
+   //set state property to conditionally render passwords don't match
+   this.setState({
+     matching: false
+   })
+  } else {
+    this.setState({
+      matching: true
+    })
+  }
+
+}
   }
 
     render(){
@@ -42,12 +70,13 @@ export default class UserSignIn extends Component{
         <div className="grid-33 centered signin">
         <h1>Sign Up</h1>
         <div>
-          <form  onChange={this.handleInput} onSubmit={this.handleSubmit}>
+          <form id="form" onChange={this.handleInput} onSubmit={this.handleSubmit}>
             <div><input id="firstName" name="firstName" type="text" className placeholder="First Name"  value={this.state.firstName} /></div>
             <div><input id="lastName" name="lastName" type="text" className placeholder="Last Name" value={this.state.lastName} /></div>
             <div><input id="emailAddress" name="emailAddress" type="text" className placeholder="Email Address" value={this.state.emailAddress} /></div>
             <div><input id="password" name="password" type="password" className placeholder="Password" value={this.state.password} /></div>
-            <div><input id="confirmPassword" name="confirmPassword" type="password" className placeholder="Confirm Password" value={this.state.confirmPassword}/></div>
+            {this.state.matching ? <span></span>:  <span>Passwords don't match</span>}
+            <div><input id="confirmPassword" name="confirmPassword" type="password" className placeholder="Confirm Password" onChange={this.pwCheck} value={this.state.confirmPassword}/></div>
             <div className="grid-100 pad-bottom"><button className="button" type="submit">Sign Up</button><button className="button button-secondary" ><NavLink to="/courses">Cancel</NavLink></button></div>
           </form>
         </div>

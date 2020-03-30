@@ -7,8 +7,14 @@ const { check, validationResult } = require('express-validator/check');
 var router = express.Router()
 var Course = require("./models").Course
 var User = require("./models").User
+var bodyParser = require('body-parser')
+const jsonParser = require('body-parser').json
+router.use(jsonParser());
 
 
+router.use(bodyParser.urlencoded({
+    extended: true
+  }));
 
 //require to hash passwords 
 const bcryptjs = require('bcryptjs');
@@ -171,12 +177,12 @@ req.course.remove()
     
     //router.post("/users",function(req,res){
     router.post("/users",function(req,res,next){
-        
+       // console.log(JSON.parse(req.body))
+       console.log(req.body)
+
     var user = new User(req.body)
-    console.log(req.body)
     
     if(!user.password){
-        console.log(user)
 
         let err = new Error("no pass")
         err.status  = 409;
