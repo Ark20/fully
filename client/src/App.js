@@ -114,6 +114,8 @@ signOut=() => {
     authed: false,
   })
   cookies.remove('authed')
+  cookies.remove('id')
+
 
   //remove current user from state 
 }

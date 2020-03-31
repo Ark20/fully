@@ -23,6 +23,7 @@ export default class CourseDetail extends Component{
                 "Authorization": `Basic ${Base64.encode(`${this.emailAddress}:${this.password}`)}`
               }),
             },)
+            window.location = "/courses"
     }
     this.state = {
       holder:[]
