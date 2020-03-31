@@ -146,6 +146,7 @@ getData =()=>{
       <Header></Header>
 
       <Switch>
+      <Route exact path ="/" component={() => <Courses data ={this.state.holder}/>}></Route>
       <Route exact path ="/courses" component={() => <Courses data ={this.state.holder}/>}></Route>
       <PrivateRoute path="/courses/create" authed={this.state.authed}><CreateCourse/></PrivateRoute>
       <PrivateRoute path="/courses/:id/update" authed={this.state.authed}><UpdateCourse/></PrivateRoute>

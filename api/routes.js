@@ -130,7 +130,11 @@ res.json(req.course)
 router.post("/courses",authenticator, function(req,res,next){
 //create course and sets location to its URL
 //201 
+console.log(req.body)
+
 var course = new Course(req.body)
+console.log(course)
+
 course.save(function(err,course){
     if(err){ 
         if (err.name === 'ValidationError') err.status  = 409;
