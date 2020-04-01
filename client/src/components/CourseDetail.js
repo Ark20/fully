@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Cookies from 'js-cookie'
 import { Base64 } from 'js-base64';
+const ReactMarkdown = require('react-markdown')
 
 let cookies = Cookies
 
@@ -69,9 +70,10 @@ fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json()
             <h3 className="course--title">{this.state.holder.title}</h3>
             <p>{this.state.holder.author}</p>
           </div>
+          <ReactMarkdown>
           <div className="course--description">
            <p>{this.state.holder.description} </p>
-          </div>
+          </div></ReactMarkdown>
         </div>
         <div className="grid-25 grid-right">
           <div className="course--stats">
@@ -81,7 +83,8 @@ fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json()
                 <h3>{this.state.holder.estimatedTime}</h3>
               </li>
               <li className="course--stats--list--item">
-                <h4>{this.state.holder.materialsNeeded}</h4>
+                <ReactMarkdown>
+                <h4>{this.state.holder.materialsNeeded}</h4></ReactMarkdown>
                 <ul>
                 </ul>
               </li>

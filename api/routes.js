@@ -10,7 +10,10 @@ var User = require("./models").User
 var bodyParser = require('body-parser')
 const jsonParser = require('body-parser').json
 router.use(jsonParser());
-
+var cookieParser = require('cookie-parser')
+router.use(cookieParser())
+var  cookies  = require('js-cookie')
+console.log(cookies)
 
 router.use(bodyParser.urlencoded({
     extended: true
@@ -34,30 +37,24 @@ const authenticator = (req,res,next) => {
             //find user with matching email address 
             let user = User.findOne({emailAddress: userInfo.name}, function(err,user){
             if(user){//if the user exists 
-                console.log("user exists:")
 
-                console.log(user)
                 
                 if(err){
-                    console.log("Some error")
                     const error = new Error("Password not Valid");
                     error.status = 401; 
                     next(error);
                 }
                 //set bool based on if passwords match 
-                console.log(userInfo.pass)
-                console.log(user.password)
+           
 
 
                 let accessGranted = bcryptjs.compareSync(userInfo.pass,user.password)
                 if(accessGranted){
 
-                    console.log("2")
     
                     req.currentUser = user
                     next()
                 }else{
-                console.log("invalid password")
                 let err = new Error("invalid password")
         err.status = 409
         return next(err)
@@ -66,7 +63,6 @@ const authenticator = (req,res,next) => {
                 }
              }else{//if user doesn't exist 
                  //user not found
-                 console.log("user not found")
 
                  res.status(501).end()
     
@@ -91,7 +87,6 @@ const authenticator = (req,res,next) => {
 router.param("id",(req,res,next,id)=>{
 //course id? 
 //find courese with id if it exist set object on request  
-console.log("ok")   
 Course.findById(id, (err,doc)=>{
     if(err) return next(err)
     if(!doc) {
@@ -130,14 +125,20 @@ res.json(req.course)
 router.post("/courses",authenticator, function(req,res,next){
 //create course and sets location to its URL
 //201 
-console.log(req.body)
 
 var course = new Course(req.body)
-console.log(course)
 
 course.save(function(err,course){
     if(err){ 
-        if (err.name === 'ValidationError') err.status  = 409;
+        console.log(err.message)
+res.erm = err.message;
+        //if (err.name === 'ValidationError') err.status  = 409;
+        cookies.set("err", res.erm)
+        res.cookie('erm', err.message)
+        console.log(cookies.get('err'))
+
+
+        res.header = err.message
         return next(err)
     }
 
@@ -159,7 +160,6 @@ req.course.update(req.body,(err,results)=>{
 router.delete("/courses/:id", authenticator, function(req,res){
 
 req.course.remove()
-      console.log('Course has been removed.')
       return res.sendStatus(204)
 })
 
@@ -181,8 +181,7 @@ req.course.remove()
     
     //router.post("/users",function(req,res){
     router.post("/users",function(req,res,next){
-       // console.log(JSON.parse(req.body))
-       console.log(req.body)
+       
 
     var user = new User(req.body)
     
@@ -195,7 +194,6 @@ req.course.remove()
 
     }
     user.password = bcryptjs.hashSync(user.password);
-console.log(user.password)
     //save the user just created 
     user.save(function(err,user){
 
@@ -206,7 +204,6 @@ console.log(user.password)
     
             return next(err)
         }
-        console.log(user.password)
 
         // if(err) return next(err)
         //set status to 201 

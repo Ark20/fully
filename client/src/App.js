@@ -84,6 +84,7 @@ signIn=(emailAddress,password) => {
       this.setState({
         authed: false
       })
+      console.log(response.status)
       throw new Error(response.status)}
     return response.json()
   }).then(response=>{
