@@ -30,7 +30,7 @@ export default class CreateCourse extends Component{
     console.log(this.state)
   }
 
- async handleSubmit(e){
+handleSubmit(e){
 
  
   e.preventDefault()
@@ -41,7 +41,7 @@ console.log("sub")
 let emailAddress = cookies.get("name")
 let password = cookies.get("pass")
 
-let bar = await fetch("http://localhost:5000/api/courses",{
+fetch("http://localhost:5000/api/courses",{
   method:'POST',
   headers: new Headers({
     "Authorization": `Basic ${Base64.encode(`${emailAddress}:${password}`)}`,
@@ -49,9 +49,26 @@ let bar = await fetch("http://localhost:5000/api/courses",{
   }),
   body: JSON.stringify(form)
 }
-)
-let cook = cookies.get()
-console.log(bar)
+
+).then((response) => {
+
+  if (response.ok) {
+    return response.json();
+  } else {
+    let rj =  response.json()
+    console.log(rj)
+
+    throw rj
+  }
+}).then(response => response.json())
+.then(json => console.log(json))
+.catch((error,rj) => {
+  console.log(rj)
+
+  console.log(error)
+
+});
+
 //window.location = "/courses"
 
     

@@ -131,14 +131,8 @@ var course = new Course(req.body)
 course.save(function(err,course){
     if(err){ 
         console.log(err.message)
-res.erm = err.message;
-        //if (err.name === 'ValidationError') err.status  = 409;
-        cookies.set("err", res.erm)
-        res.cookie('erm', err.message)
-        console.log(cookies.get('err'))
 
 
-        res.header = err.message
         return next(err)
     }
 
