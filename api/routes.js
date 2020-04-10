@@ -132,8 +132,9 @@ course.save(function(err,course){
     if(err){ 
         console.log(err.message)
 
-
-        return next(err)
+        err.status=400
+        res.error = err.message
+        return next(err,err.message)
     }
 
    res.location("/courses/"+course.user)

@@ -37,7 +37,6 @@ handleSubmit(e){
 
 const form = {"user": cookies.get('id'),"title":this.state.title,
 "estimatedTime":this.state.estimatedTime, "materialsNeeded":this.state.materialsNeeded, "description":this.state.description}
-console.log("sub")
 let emailAddress = cookies.get("name")
 let password = cookies.get("pass")
 
@@ -51,19 +50,13 @@ fetch("http://localhost:5000/api/courses",{
 }
 
 ).then((response) => {
-
-  if (response.ok) {
-    return response.json();
-  } else {
-    let rj =  response.json()
-    console.log(rj)
-
-    throw rj
+  if(response.status==400){
+    return response.json()
   }
-}).then(response => response.json())
-.then(json => console.log(json))
-.catch((error,rj) => {
-  console.log(rj)
+
+
+})
+.catch((error) => {
 
   console.log(error)
 
