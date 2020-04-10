@@ -51,11 +51,15 @@ fetch("http://localhost:5000/api/courses",{
 
 ).then((response) => {
   if(response.status==400){
-    return response.json()
+   let apiError = response.json()
+    return apiError
   }
-
-
+  console.log(response)
 })
+
+.then( apiError => {
+console.log(apiError)
+}) 
 .catch((error) => {
 
   console.log(error)
