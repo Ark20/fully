@@ -5,17 +5,20 @@ let cookies = Cookies
 
 export default class CreateCourse extends Component{
 
+
+
   constructor(props) {
     super(props)
     this.state={
-      '':""
+      '':"",
+      titleEr : false,
+      desc : false
     }
     this.handleInput = this.handleInput.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
 
 
   }
-
   handleInput(e){
 
     const target = e.target
@@ -29,16 +32,18 @@ export default class CreateCourse extends Component{
     })
     console.log(this.state)
   }
+  
 
 handleSubmit(e){
-
- 
+console.log(e)
   e.preventDefault()
 
 const form = {"user": cookies.get('id'),"title":this.state.title,
 "estimatedTime":this.state.estimatedTime, "materialsNeeded":this.state.materialsNeeded, "description":this.state.description}
 let emailAddress = cookies.get("name")
 let password = cookies.get("pass")
+
+
 
 fetch("http://localhost:5000/api/courses",{
   method:'POST',
@@ -50,19 +55,30 @@ fetch("http://localhost:5000/api/courses",{
 }
 
 ).then((response) => {
+  
   if(response.status==400){
    let apiError = response.json()
     return apiError
   }
-  console.log(response)
-})
+  window.location = "/courses"
 
-.then( apiError => {
-console.log(apiError.error.message.split(" ").includes('description:'))
+  console.log(response)
+}).then( apiError => {
+  console.log(apiError)
+
+  if(apiError.error.message.split(" ").includes('description:')){
+    this.setState({
+      desc: true
+    })
+
+  } else if(apiError.error.message.split(" ").includes('title:')){
+    this.setState({
+     titleEr: true
+    })
+  }
 }) 
 
 
-//window.location = "/courses"
 
     
   }
@@ -72,15 +88,26 @@ console.log(apiError.error.message.split(" ").includes('description:'))
         <div className="bounds course--detail">
         <h1>Create Course</h1>
         <div>
-          <div>
-            
-          </div>
+          <div id="formHolder">
+          {this.state.titleEr||this.state.desc ? <div>
+            <h2 className="validation--errors--label">Validation errors</h2>
+            <div className="validation-errors">
+              <ul>
+                {this.state.titleEr?
+                <li>Please provide a value for "Title"{this.state.titleEr}</li> :""}
+
+                {this.state.desc ?
+                <li>Please provide a value for "Description" + {this.state.desc}</li>:""}
+              </ul>
+            </div>
+          </div> : ""}
+        
           <form onChange={this.handleInput} onSubmit={this.handleSubmit}>
             <div className="grid-66">
               <div className="course--header">
                 <h4 className="course--label">Course</h4>
-                <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..." defaultValue  value={this.state.title} /></div>
-                <p>By Joe Smith</p>
+                <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..." defaultValue={""}  value={this.state.title} /></div>
+                <p>Description</p>
               </div>
               <div className="course--description">
                 <div><textarea id="description" name="description" className placeholder="Course description..." defaultValue={""}  value={this.state.description} /></div>
@@ -91,7 +118,7 @@ console.log(apiError.error.message.split(" ").includes('description:'))
                 <ul className="course--stats--list">
                   <li className="course--stats--list--item">
                     <h4>Estimated Time</h4>
-                    <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" defaultValue  value={this.state.estimatedTime} /></div>
+                    <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" defaultValue={""}  value={this.state.estimatedTime} /></div>
                   </li>
                   <li className="course--stats--list--item">
                     <h4>Materials Needed</h4>
@@ -100,11 +127,11 @@ console.log(apiError.error.message.split(" ").includes('description:'))
                 </ul>
               </div>
             </div>
-            <div className="grid-100 pad-bottom"><button className="button" type="submit">Create Course</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='/courses';">Cancel</button></div>
+            <div className="grid-100 pad-bottom"><button className="button" type="submit">Create Course</button><button type="button" className="button button-secondary" onClick={()=>window.location.href='/courses'}>Cancel</button></div>
           </form>
         </div>
       </div>
-
+      </div>
     )
 
     }

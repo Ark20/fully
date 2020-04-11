@@ -259,7 +259,7 @@ body{
 /* line 44, ../sass/global.sass */
 .actions--bar {
   border-bottom: 1px solid #d5f9fe;
-  background: #f8feff;
+  background: lavender;
   padding: 20px 0;
   margin-top: -30px;
 }

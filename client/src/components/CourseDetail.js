@@ -70,10 +70,10 @@ fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json()
             <h3 className="course--title">{this.state.holder.title}</h3>
             <p>{this.state.holder.author}</p>
           </div>
-          <ReactMarkdown>
+          
           <div className="course--description">
-           <p>{this.state.holder.description} </p>
-          </div></ReactMarkdown>
+           <p><ReactMarkdown>{this.state.holder.description}</ReactMarkdown> </p>
+          </div>
         </div>
         <div className="grid-25 grid-right">
           <div className="course--stats">
