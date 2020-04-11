@@ -58,13 +58,9 @@ fetch("http://localhost:5000/api/courses",{
 })
 
 .then( apiError => {
-console.log(apiError)
+console.log(apiError.error.message.split(" ").includes('description:'))
 }) 
-.catch((error) => {
 
-  console.log(error)
-
-});
 
 //window.location = "/courses"
 
