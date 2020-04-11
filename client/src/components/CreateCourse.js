@@ -56,7 +56,7 @@ fetch("http://localhost:5000/api/courses",{
 
 ).then((response) => {
   
-  if(response.status==400){
+  if(response.status===400){
    let apiError = response.json()
     return apiError
   }

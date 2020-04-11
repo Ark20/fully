@@ -19,7 +19,6 @@ import {
 import { Base64 } from 'js-base64';
 import {Provider} from './components/Context'
 import Cookies from 'js-cookie'
-import { strict } from 'assert';
 let cookies = Cookies
 
 //import { strict } from 'assert';
@@ -99,7 +98,7 @@ console.log(response._id)
       name:emailAddress,
       pass:password
     })
-    
+
     //useHistory().replace(from);
     console.log()
   })
@@ -154,7 +153,7 @@ getData =()=>{
       <PrivateRoute path="/courses/create" authed={this.state.authed}><CreateCourse/></PrivateRoute>
       <PrivateRoute path="/courses/:id/update" authed={this.state.authed} component={({match}) => <UpdateCourse id={match.params.id} />}></PrivateRoute>
       <Route exact path ="/courses/signin" component={() => <SignIn />}></Route>
-      <Route exact path ="/courses/signup" component={() => <SignUp />}></Route>
+      <Route exact path ="/courses/signup" component={() => <SignUp signIn = {this.signIn} />}></Route>
       <Route path ="/courses/signout" component={() => <UserSignOut signOut = {this.signOut}/>}></Route>
       <Route exact path ="/courses/:id" component={({match}) => <CourseDetail id={match.params.id} />}></Route>
       

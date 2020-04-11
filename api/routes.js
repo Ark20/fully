@@ -130,7 +130,6 @@ var course = new Course(req.body)
 
 course.save(function(err,course){
     if(err){ 
-        console.log(err.message)
 
         err.status=400
         res.error = err.message
@@ -179,26 +178,27 @@ req.course.remove()
        
 
     var user = new User(req.body)
-    
-    if(!user.password){
+    console.log(user)
 
-        let err = new Error("no pass")
-        err.status  = 409;
-        //err.message = req.body
-        return next(err)
+    if(user.password){
+
+        user.password = bcryptjs.hashSync(user.password);
+
 
     }
-    user.password = bcryptjs.hashSync(user.password);
+
+
     //save the user just created 
     user.save(function(err,user){
 
-        if(err){ 
-    
-            if (err.name === 'ValidationError') err.status  = 409;
-            res.status(409)
-    
-            return next(err)
-        }
+       if(err){ 
+
+        console.log(err.message)
+
+        err.status=400
+        res.error = err.message
+        return next(err,err.message)
+    }
 
         // if(err) return next(err)
         //set status to 201 

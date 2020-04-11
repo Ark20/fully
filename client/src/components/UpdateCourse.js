@@ -55,14 +55,15 @@ fetch(`http://localhost:5000/api/courses/${id}`,{
   }),
   body: JSON.stringify(form)
 },
-window.location = "/courses"
+
 
 ).then((response) => {
   
-  if(response.status==400){
+  if(response.status===400){
    let apiError = response.json()
     return apiError
   }
+  window.location = "/courses"
 
   console.log(response)
 }).then( apiError => {

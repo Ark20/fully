@@ -8,7 +8,7 @@ export default class UserSignIn extends Component{
     this.state = {
       matching:true
     }
-
+    this.signIn = props.signIn
     this.handleInput = this.handleInput.bind(this)
     this.pwCheck = this.pwCheck.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -22,16 +22,30 @@ export default class UserSignIn extends Component{
 
 const form = {"firstName":this.state.firstName,
 "lastName":this.state.lastName, "password":this.state.password, "emailAddress":this.state.emailAddress}
-console.log(form)
 
-console.log(this.state)
 fetch("http://localhost:5000/api/users",{
   method:'POST',
   headers: { 'Content-type': 'application/json' },
   body: JSON.stringify(form)
 }
-)
-window.location="/courses" 
+).then(response=>{
+  if(response.ok){
+    this.signIn(this.state.emailAddress,this.state.password)
+    console.log(this.signIn)
+    window.location="/courses" 
+
+  }else{
+    if(response.status===400){
+      let apiError = response.json()
+       return apiError
+     }
+  }
+}).then( apiError => {
+  console.log(apiError)
+  this.setState({
+    error:"true"
+  })
+}) 
 
 
   }
@@ -50,7 +64,7 @@ window.location="/courses"
 //action="http://localhost:5000/api/users" method="post" 
   pwCheck(e){
     if(this.state.password){
-  if(!(this.state.password ==e.target.value)){
+  if(!(this.state.password ===e.target.value)){
    //set state property to conditionally render passwords don't match
    this.setState({
      matching: false
@@ -67,9 +81,13 @@ window.location="/courses"
     render(){
 
     return(
+      
         <div className="grid-33 centered signin">
         <h1>Sign Up</h1>
         <div>
+        {this.state.error ?
+            <div className="validation-errors">Please make sure each field has a value</div>:""}
+
           <form id="form" onChange={this.handleInput} onSubmit={this.handleSubmit}>
             <div><input id="firstName" name="firstName" type="text" className placeholder="First Name"  value={this.state.firstName} /></div>
             <div><input id="lastName" name="lastName" type="text" className placeholder="Last Name" value={this.state.lastName} /></div>
