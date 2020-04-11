@@ -32,7 +32,7 @@ fetch("http://localhost:5000/api/users",{
   if(response.ok){
     this.signIn(this.state.emailAddress,this.state.password)
     console.log(this.signIn)
-    window.location="/courses" 
+    //window.location="/courses" 
 
   }else{
     if(response.status===400){

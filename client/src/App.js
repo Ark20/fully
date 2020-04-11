@@ -98,6 +98,7 @@ console.log(response._id)
       name:emailAddress,
       pass:password
     })
+    window.location="/courses" 
 
     //useHistory().replace(from);
     console.log()
