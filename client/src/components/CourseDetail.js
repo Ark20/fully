@@ -27,7 +27,8 @@ export default class CourseDetail extends Component{
             window.location = "/courses"
     }
     this.state = {
-      holder:[]
+      holder:[],
+      user:{}
     }
   
   }
@@ -39,13 +40,14 @@ let id = this.props.id
 
 fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json())
     .then(response =>{ 
-      console.log(response.user)
-      console.log(cookies.get("id"))
+
 
        this.setState({
          holder: response,
+         user: response.user,
          id: id
        }) 
+       console.log(this.state)
 
 
     })
@@ -68,7 +70,7 @@ fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json()
           <div className="course--header">
             <h4 className="course--label">Course</h4>
             <h3 className="course--title">{this.state.holder.title}</h3>
-            <p>{this.state.holder.author}</p>
+            <p>By  {this.state.user.firstName}</p>
           </div>
           
           <div className="course--description">

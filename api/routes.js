@@ -13,7 +13,6 @@ router.use(jsonParser());
 var cookieParser = require('cookie-parser')
 router.use(cookieParser())
 var  cookies  = require('js-cookie')
-console.log(cookies)
 
 router.use(bodyParser.urlencoded({
     extended: true
@@ -26,7 +25,6 @@ const auth = require('basic-auth');
 
 
 
-//put console.log statements in each of the ifs check logic 
 const authenticator = (req,res,next) => {
 
     //parse the request body for userInfo
@@ -95,7 +93,21 @@ Course.findById(id, (err,doc)=>{
         return next(err)
     }
     req.course = doc
-    return next()
+
+  
+
+
+}).then(()=>{
+    User.findOne({ _id: req.course.user},(err,author)=>{
+        if(author){
+            req.course.user = author
+            console.log(req.course)
+
+
+        }else{}
+        return next()
+
+    })
 })
 })
 
@@ -119,6 +131,7 @@ res.status(200)
 res.json(req.course)
 
 })
+
 
 //fix these next two routes!
 
@@ -178,7 +191,6 @@ req.course.remove()
        
 
     var user = new User(req.body)
-    console.log(user)
 
     if(user.password){
 
@@ -193,7 +205,6 @@ req.course.remove()
 
        if(err){ 
 
-        console.log(err.message)
 
         err.status=400
         res.error = err.message
