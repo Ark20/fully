@@ -82,12 +82,13 @@ signIn=(emailAddress,password) => {
     if(!response.ok){ 
       this.setState({
         authed: false
+        
       })
       console.log(response.status)
       throw new Error(response.status)}
     return response.json()
   }).then(response=>{
-console.log(response._id)
+console.log(response)
     cookies.set("authed", true, {path: "/"})
     cookies.set("name", emailAddress, {path: "/"})
     cookies.set("pass", password, {path: "/"})
@@ -98,11 +99,21 @@ console.log(response._id)
       name:emailAddress,
       pass:password
     })
+    cookies.remove('incorrectLogin')
     window.location="/courses" 
 
     //useHistory().replace(from);
     console.log()
-  })
+  }).catch(error => 
+    {
+    cookies.set('incorrectLogin',true)
+
+    this.setState({
+      name:"",
+      pass:""
+    })
+    });
+
 
   //if authed store email and name to state 
   

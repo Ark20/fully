@@ -42,8 +42,34 @@ fetch("http://localhost:5000/api/users",{
   }
 }).then( apiError => {
   console.log(apiError)
+  let erm = apiError.error.message.split(" ")
+  console.log(erm)
+let possibleErrors = ["password:","firstName:","lastName:", "emailAddress:"]
+let currentErrors = ""
+for(let i=0; i<=possibleErrors.length;i++){
+  if(erm.includes(possibleErrors[i])){
+    if(possibleErrors[i]==="firstName:"){
+      possibleErrors[i]="first name"
+      currentErrors +=  possibleErrors[i] + " "
+    }
+    else if(possibleErrors[i]==="lastName:"){
+      possibleErrors[i]="last name"
+      currentErrors +=  possibleErrors[i] + " "
+    }
+    else if(possibleErrors[i]==="emailAddress:"){
+      possibleErrors[i]="email address"
+      currentErrors +=  possibleErrors[i] + " "
+    } else{
+      currentErrors +=  possibleErrors[i].substring(0,possibleErrors[i].length-1) + " "
+
+    }
+  }
+}
+console.log(currentErrors)
+
+
   this.setState({
-    error:"true"
+    error: currentErrors
   })
 }) 
 
@@ -86,7 +112,7 @@ fetch("http://localhost:5000/api/users",{
         <h1>Sign Up</h1>
         <div>
         {this.state.error ?
-            <div className="validation-errors">Please make sure each field has a value</div>:""}
+            <div className="validation-errors">Please make sure to add values to these fields: {this.state.error}</div>:""}
 
           <form id="form" onChange={this.handleInput} onSubmit={this.handleSubmit}>
             <div><input id="firstName" name="firstName" type="text" className placeholder="First Name"  value={this.state.firstName} /></div>

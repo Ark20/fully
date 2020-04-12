@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import { Consumer } from './Context'
 import { NavLink}  from 'react-router-dom'
-
+import Cookies from 'js-cookie'
+let cookies = Cookies
 export default class UserSignIn extends Component{
 
   prev = (e) =>{
@@ -14,9 +15,10 @@ export default class UserSignIn extends Component{
           <h1>Sign In</h1>
           <div>
             <form onSubmit={this.prev}>
+              {cookies.get("incorrectLogin") ? <p>You have entered the wrong email or password</p>:""}
               <div><input id="emailAddress" name="emailAddress" type="text" className placeholder="Email Address" defaultValue /></div>
               <div><input id="password" name="password" type="password" className placeholder="Password" defaultValue /></div>
-              <div className="grid-100 pad-bottom"><NavLink to="/courses"><button className="button" type="submit"  onClick={() => context.actions.signIn(document.getElementById("emailAddress").value,document.getElementById("password").value)}>Sign In</button></NavLink><button className="button button-secondary" href="/courses"><NavLink to="/courses">Cancel</NavLink></button></div>
+              <div className="grid-100 pad-bottom"><button className="button" type="submit"  onClick={() => context.actions.signIn(document.getElementById("emailAddress").value,document.getElementById("password").value)}>Sign In</button><button className="button button-secondary" href="/courses"><NavLink to="/courses">Cancel</NavLink></button></div>
             </form>
           </div>
           <p>&nbsp;</p>
