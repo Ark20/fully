@@ -130,7 +130,7 @@ fetch(`http://localhost:5000/api/courses/${id}`,{
                 </ul>
               </div>
             </div>
-            <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><button type="button" className="button button-secondary" onClick={()=>window.location.href='/courses'}>Cancel</button></div>
+            <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><button type="button" className="button button-secondary" onClick={()=>window.location.href=`/courses/${this.props.id}`}>Cancel</button></div>
           </form>
         </div>
       </div>
