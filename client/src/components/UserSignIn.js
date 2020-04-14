@@ -8,6 +8,11 @@ export default class UserSignIn extends Component{
   prev = (e) =>{
     e.preventDefault()
   }
+  componentDidMount(){
+    cookies.remove('incorrectLogin')
+
+  }
+
     render(){
     return(<Consumer>{context => (
         <div className="bounds">

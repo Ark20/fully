@@ -40,14 +40,13 @@ let id = this.props.id
 
 fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json())
     .then(response =>{ 
-
-
        this.setState({
          holder: response,
          user: response.user,
          id: id
        }) 
        console.log(this.state)
+       console.log(cookies.get())
 
 
     })
@@ -58,10 +57,10 @@ fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json()
     render(){
     return(
       <div>
-        <div class="actions--bar">
-          <div class="bounds">{ cookies.get("id") === this.state.holder.user ?
-            <div class="grid-100"><span><a class="button" href={`/courses/${this.state.id}/update`}>Update Course</a><button class="button" onClick={()=> this.delete(this.state.id)}>Delete Course</button></span><a
-                class="button button-secondary" href="/courses">Return to List</a></div> : <span></span>
+        <div className="actions--bar">
+          <div className="bounds">{ cookies.get("id") === this.state.user._id?
+            <div className="grid-100"><span><a className="button" href={`/courses/${this.state.id}/update`}>Update Course</a><button class="button" onClick={()=> this.delete(this.state.id)}>Delete Course</button></span><a
+                className="button button-secondary" href="/courses">Return to List</a></div> :""
           }
           </div>
         </div>
