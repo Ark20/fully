@@ -70,12 +70,21 @@ fetch("http://localhost:5000/api/courses",{
     this.setState({
       desc: true
     })
+  }  else{
+      this.setState({
+        desc: false
+      })
+    }
+    if(apiError.error.message.split(" ").includes('title:')){
+      this.setState({
+       titleEr: true
+      })
+    } else{
+      this.setState({
+        titleEr: false
+      })
+    }
 
-  } else if(apiError.error.message.split(" ").includes('title:')){
-    this.setState({
-     titleEr: true
-    })
-  }
 }) 
 
 
@@ -94,10 +103,9 @@ fetch("http://localhost:5000/api/courses",{
             <div className="validation-errors">
               <ul>
                 {this.state.titleEr?
-                <li>Please provide a value for "Title"{this.state.titleEr}</li> :""}
-
+                <li>Please provide a value for "Title"</li> :""}
                 {this.state.desc ?
-                <li>Please provide a value for "Description" + {this.state.desc}</li>:""}
+                <li>Please provide a value for "Description" </li>:""}
               </ul>
             </div>
           </div> : ""}
