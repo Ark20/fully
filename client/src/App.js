@@ -93,6 +93,8 @@ console.log(response)
     cookies.set("name", emailAddress, {path: "/"})
     cookies.set("pass", password, {path: "/"})
     cookies.set("id", response._id, {path: "/"})
+    cookies.set("wholeName", (response.firstName+ " "+ response.lastName), {path: "/"})
+
 
 
     this.setState({
