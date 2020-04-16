@@ -35,7 +35,7 @@ export default class UpdateCourse extends Component{
     console.log(this.state)
   }
   
-
+//when form is submitted post course with put request 
 handleSubmit(e){
 console.log(e)
   e.preventDefault()
@@ -58,7 +58,7 @@ fetch(`http://localhost:5000/api/courses/${id}`,{
 
 
 ).then((response) => {
-  
+  //create error message and redirect user 
   if(response.status===400){
    let apiError = response.json()
     return apiError

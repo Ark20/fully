@@ -15,35 +15,34 @@ export default class UserSignIn extends Component{
 
 
   }
- 
+ //function to post new users to db on submit 
   handleSubmit(e){
 
     e.preventDefault()
-
+//store form data in variable 
 const form = {"firstName":this.state.firstName,
 "lastName":this.state.lastName, "password":this.state.password, "emailAddress":this.state.emailAddress}
 
-fetch("http://localhost:5000/api/users",{
+fetch("http://localhost:5000/api/users",{ //call post with user in request body
   method:'POST',
   headers: { 'Content-type': 'application/json' },
   body: JSON.stringify(form)
 }
 ).then(response=>{
-  if(response.ok){
+  if(response.ok){//if response is ok then sign the new user in 
     this.signIn(this.state.emailAddress,this.state.password)
     console.log(this.signIn)
     //window.location="/courses" 
 
-  }else{
+  }else{//if bad response post error message
     if(response.status===400){
       let apiError = response.json()
        return apiError
      }
   }
 }).then( apiError => {
-  console.log(apiError)
+   //create error string based on errors present 
   let erm = apiError.error.message.split(" ")
-  console.log(erm)
 let possibleErrors = ["password:","firstName:","lastName:", "emailAddress:"]
 let currentErrors = ""
 for(let i=0; i<=possibleErrors.length;i++){
@@ -65,7 +64,6 @@ for(let i=0; i<=possibleErrors.length;i++){
     }
   }
 }
-console.log(currentErrors)
 
 
   this.setState({
@@ -77,6 +75,7 @@ console.log(currentErrors)
   }
 
   handleInput(e){
+    //when input is added check to see if passwords match 
     const target = e.target
     const name = target.name
     const value = target.value

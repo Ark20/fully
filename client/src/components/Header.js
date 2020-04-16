@@ -3,7 +3,6 @@ import { NavLink}  from 'react-router-dom'
 
 import Cookies from 'js-cookie'
 let cookies = Cookies
-console.log(cookies.get("wholeName"))
 //show sign out if signed in
 export default class Header extends Component {
 

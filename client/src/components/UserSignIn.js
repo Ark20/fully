@@ -9,7 +9,7 @@ export default class UserSignIn extends Component{
     e.preventDefault()
   }
   componentDidMount(){
-    cookies.remove('incorrectLogin')
+    cookies.remove('incorrectLogin') //clear error messages 
 
   }
 

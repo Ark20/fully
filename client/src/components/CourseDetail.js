@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import { Base64 } from 'js-base64';
 const ReactMarkdown = require('react-markdown')
 
-let cookies = Cookies
+let cookies = Cookies //include cookies package to store and access current user 
 
 
 export default class CourseDetail extends Component{
@@ -11,13 +11,13 @@ export default class CourseDetail extends Component{
   
   constructor(){
     super()
-    this.emailAddress= cookies.get("name")
+    this.emailAddress= cookies.get("name")//pull user info from cookies 
     this.password= cookies.get("pass")
-
+//function to delete courses for authorized users 
     this.delete = function (id) {
       console.log(this.emailAddress)
       console.log(this.password)
-
+//delete request on course route
              fetch(`http://localhost:5000/api/courses/${id}`, {
               method: 'delete',
               headers: new Headers({
@@ -27,7 +27,7 @@ export default class CourseDetail extends Component{
             window.location = "/courses"
     }
     this.state = {
-      holder:[],
+      holder:[],//will hold response from get request for user data 
       user:{},
       isLoading:true
     }
@@ -37,8 +37,8 @@ export default class CourseDetail extends Component{
 
 
   componentDidMount(){
-let id = this.props.id
-
+let id = this.props.id//store id of current course 
+//get course data and store it in state 
 fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json())
     .then(response =>{ 
        this.setState({
@@ -60,7 +60,7 @@ fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json()
     return(
       <div>
         <div className="actions--bar">
-          <div className="bounds">{ cookies.get("id") === this.state.user._id?
+          <div className="bounds">{ cookies.get("id") === this.state.user._id?//conditionally render buttons for logged in users
             <div className="grid-100"><span><a className="button" href={`/courses/${this.state.id}/update`}>Update Course</a><button class="button" onClick={()=> this.delete(this.state.id)}>Delete Course</button></span><a
                 className="button button-secondary" href="/courses">Return to List</a></div> :""
           } 
