@@ -28,7 +28,8 @@ export default class CourseDetail extends Component{
     }
     this.state = {
       holder:[],
-      user:{}
+      user:{},
+      isLoading:true
     }
   
   }
@@ -43,7 +44,8 @@ fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json()
        this.setState({
          holder: response,
          user: response.user,
-         id: id
+         id: id,
+         isLoading: false
        }) 
        console.log(this.state)
        console.log(cookies.get())
@@ -61,9 +63,10 @@ fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json()
           <div className="bounds">{ cookies.get("id") === this.state.user._id?
             <div className="grid-100"><span><a className="button" href={`/courses/${this.state.id}/update`}>Update Course</a><button class="button" onClick={()=> this.delete(this.state.id)}>Delete Course</button></span><a
                 className="button button-secondary" href="/courses">Return to List</a></div> :""
-          }
+          } 
           </div>
         </div>
+        { this.state.isloading ? <p>Courses Loading...</p>:
         <div className="bounds course--detail">
         <div className="grid-66">
           <div className="course--header">
@@ -92,7 +95,7 @@ fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json()
             </ul>
           </div>
         </div>
-      </div>  
+        </div> } 
       </div>
     )
 
