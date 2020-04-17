@@ -7,7 +7,8 @@ export default class UpdateCourse extends Component{
 
   componentDidMount(){
     let id = this.props.id
-    console.log(id)
+    let bug=cookies.get("courseDeets")
+    console.log(typeof bug)
   }
   constructor(props) {
     super(props)
@@ -109,11 +110,11 @@ fetch(`http://localhost:5000/api/courses/${id}`,{
             <div className="grid-66">
               <div className="course--header">
                 <h4 className="course--label">Course</h4>
-                <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..." defaultValue={""}  value={this.state.title} /></div>
+                <div><input id="title" name="title" type="text" className="input-title course--title--input" defaultValue={JSON.parse(cookies.get("courseDeets")).title} value={this.state.title} /></div>
                 <p>Description</p>
               </div>
               <div className="course--description">
-                <div><textarea id="description" name="description"  placeholder="Course description..." defaultValue={""}  value={this.state.description} /></div>
+                <div><textarea id="description" name="description"  defaultValue={JSON.parse(cookies.get("courseDeets")).description}  value={this.state.description} /></div>
               </div>
             </div>
             <div className="grid-25 grid-right">
@@ -121,11 +122,11 @@ fetch(`http://localhost:5000/api/courses/${id}`,{
                 <ul className="course--stats--list">
                   <li className="course--stats--list--item">
                     <h4>Estimated Time</h4>
-                    <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" defaultValue={""}  value={this.state.estimatedTime} /></div>
+                    <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" defaultValue={JSON.parse(cookies.get("courseDeets")).estimatedTime}  value={this.state.estimatedTime} /></div>
                   </li>
                   <li className="course--stats--list--item">
                     <h4>Materials Needed</h4>
-                    <div><textarea id="materialsNeeded" name="materialsNeeded"  placeholder="List materials..." defaultValue={""}  value={this.state.materialsNeeded} /></div>
+                    <div><textarea id="materialsNeeded" name="materialsNeeded"  defaultValue={JSON.parse(cookies.get("courseDeets")).materialsNeeded}  value={this.state.materialsNeeded} /></div>
                   </li>
                 </ul>
               </div>

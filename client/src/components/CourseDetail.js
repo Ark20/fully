@@ -49,6 +49,7 @@ fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json()
          id: id,
          isLoading: false
        }) 
+      cookies.set("courseDeets",response)
        console.log(this.state)
 
 
