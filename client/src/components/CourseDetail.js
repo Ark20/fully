@@ -37,6 +37,8 @@ export default class CourseDetail extends Component{
 
 
   componentDidMount(){
+    console.log(this.state)
+
 let id = this.props.id//store id of current course 
 //get course data and store it in state 
 fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json())
@@ -48,7 +50,6 @@ fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json()
          isLoading: false
        }) 
        console.log(this.state)
-       console.log(cookies.get())
 
 
     })
@@ -61,12 +62,12 @@ fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json()
       <div>
         <div className="actions--bar">
           <div className="bounds">{ cookies.get("id") === this.state.user._id?//conditionally render buttons for logged in users
-            <div className="grid-100"><span><a className="button" href={`/courses/${this.state.id}/update`}>Update Course</a><button class="button" onClick={()=> this.delete(this.state.id)}>Delete Course</button></span><a
+            <div className="grid-100"><span><a className="button" href={`/courses/${this.state.id}/update`}>Update Course</a><button className="button" onClick={()=> this.delete(this.state.id)}>Delete Course</button></span><a
                 className="button button-secondary" href="/courses">Return to List</a></div> :""
           } 
           </div>
         </div>
-        { this.state.isloading ? <p>Courses Loading...</p>:
+        { this.state.isLoading ? <p>Courses Loading...</p> :
         <div className="bounds course--detail">
         <div className="grid-66">
           <div className="course--header">
@@ -76,7 +77,7 @@ fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json()
           </div>
           
           <div className="course--description">
-           <p><ReactMarkdown>{this.state.holder.description}</ReactMarkdown> </p>
+          <ReactMarkdown>{this.state.holder.description}</ReactMarkdown>
           </div>
         </div>
         <div className="grid-25 grid-right">
@@ -88,7 +89,7 @@ fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json()
               </li>
               <li className="course--stats--list--item">
                 <ReactMarkdown>
-                <h4>{this.state.holder.materialsNeeded}</h4></ReactMarkdown>
+                {this.state.holder.materialsNeeded}</ReactMarkdown>
                 <ul>
                 </ul>
               </li>

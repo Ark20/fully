@@ -1,25 +1,25 @@
 import React, {Component} from 'react'
-import { NavLink}  from 'react-router-dom'
 
 import Cookies from 'js-cookie'
 let cookies = Cookies
 //show sign out if signed in
-export default class Header extends Component {
+function Header() {
 
-    render(){
         return(
             <div className="header">
             <div className="bounds">
               <h1 className="header--logo">Courses</h1>
               {
-                cookies.get("authed") ? <><a className="signup">{cookies.get("wholeName")}</a><nav><NavLink to="/signOut"><a className="signup">Sign Out</a></NavLink></nav> </>:
-              <nav><NavLink to="/courses/signup"><a className="signup">Sign Up</a></NavLink>
-              <NavLink to="/signin"><a className="signin" >Sign In</a></NavLink></nav>
+                cookies.get("authed") ? <nav><a href="/" className="signup"> Hello {cookies.get("wholeName")}</a><a href="/signOut" className="signup">Sign Out</a> </nav>:
+              <nav><a href="/courses/signUp" className="signup">Sign Up</a>
+              <a className="signin" href="/signIn"  >Sign In</a></nav>
     
     
     }
             </div>
           </div>
         )
-    }
+    
 }
+
+export default Header

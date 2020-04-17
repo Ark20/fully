@@ -113,7 +113,7 @@ fetch(`http://localhost:5000/api/courses/${id}`,{
                 <p>Description</p>
               </div>
               <div className="course--description">
-                <div><textarea id="description" name="description" className placeholder="Course description..." defaultValue={""}  value={this.state.description} /></div>
+                <div><textarea id="description" name="description"  placeholder="Course description..." defaultValue={""}  value={this.state.description} /></div>
               </div>
             </div>
             <div className="grid-25 grid-right">
@@ -125,7 +125,7 @@ fetch(`http://localhost:5000/api/courses/${id}`,{
                   </li>
                   <li className="course--stats--list--item">
                     <h4>Materials Needed</h4>
-                    <div><textarea id="materialsNeeded" name="materialsNeeded" className placeholder="List materials..." defaultValue={""}  value={this.state.materialsNeeded} /></div>
+                    <div><textarea id="materialsNeeded" name="materialsNeeded"  placeholder="List materials..." defaultValue={""}  value={this.state.materialsNeeded} /></div>
                   </li>
                 </ul>
               </div>

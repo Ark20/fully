@@ -114,17 +114,17 @@ for(let i=0; i<=possibleErrors.length;i++){
             <div className="validation-errors">Please make sure to add values to these fields: {this.state.error}</div>:""}
 
           <form id="form" onChange={this.handleInput} onSubmit={this.handleSubmit}>
-            <div><input id="firstName" name="firstName" type="text" className placeholder="First Name"  value={this.state.firstName} /></div>
-            <div><input id="lastName" name="lastName" type="text" className placeholder="Last Name" value={this.state.lastName} /></div>
-            <div><input id="emailAddress" name="emailAddress" type="text" className placeholder="Email Address" value={this.state.emailAddress} /></div>
-            <div><input id="password" name="password" type="password" className placeholder="Password" value={this.state.password} /></div>
+            <div><input id="firstName" name="firstName" type="text" placeholder="First Name"  value={this.state.firstName} /></div>
+            <div><input id="lastName" name="lastName" type="text"  placeholder="Last Name" value={this.state.lastName} /></div>
+            <div><input id="emailAddress" name="emailAddress" type="text" placeholder="Email Address" value={this.state.emailAddress} /></div>
+            <div><input id="password" name="password" type="password" placeholder="Password" value={this.state.password} /></div>
             {this.state.matching ? <span></span>:  <span>Passwords don't match</span>}
-            <div><input id="confirmPassword" name="confirmPassword" type="password" className placeholder="Confirm Password" onChange={this.pwCheck} value={this.state.confirmPassword}/></div>
+            <div><input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm Password" onChange={this.pwCheck} value={this.state.confirmPassword}/></div>
             <div className="grid-100 pad-bottom"><button className="button" type="submit">Sign Up</button><button className="button button-secondary" ><NavLink to="/courses">Cancel</NavLink></button></div>
           </form>
         </div>
         <p>&nbsp;</p>
-        <p>Already have a user account? <a href="/courses/signin">Click here</a> to sign in!</p>
+        <p>Already have a user account? <a href="/signIn">Click here</a> to sign in!</p>
       </div>
 
     )
