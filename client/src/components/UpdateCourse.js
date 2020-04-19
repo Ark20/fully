@@ -5,11 +5,7 @@ let cookies = Cookies
 
 export default class UpdateCourse extends Component{
 
-  componentDidMount(){
-    let id = this.props.id
-    let bug=cookies.get("courseDeets")
-    console.log(typeof bug)
-  }
+
   constructor(props) {
     super(props)
     this.state={
@@ -33,12 +29,10 @@ export default class UpdateCourse extends Component{
       [name]:value
 
     })
-    console.log(this.state)
   }
   
 //when form is submitted post course with put request 
 handleSubmit(e){
-console.log(e)
   e.preventDefault()
 
 const form = {"user": cookies.get('id'),"title":this.state.title,
@@ -74,12 +68,20 @@ fetch(`http://localhost:5000/api/courses/${id}`,{
     this.setState({
       desc: true
     })
-
-  } else if(apiError.error.message.split(" ").includes('title:')){
-    this.setState({
-     titleEr: true
-    })
-  }
+  }  else{
+      this.setState({
+        desc: false
+      })
+    }
+    if(apiError.error.message.split(" ").includes('title:')){
+      this.setState({
+       titleEr: true
+      })
+    } else{
+      this.setState({
+        titleEr: false
+      })
+    }
 }) 
 
 

@@ -30,7 +30,6 @@ export default class CreateCourse extends Component{
       [name]:value
 
     })
-    console.log(this.state)
   }
   
 

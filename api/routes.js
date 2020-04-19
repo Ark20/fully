@@ -101,7 +101,6 @@ Course.findById(id, (err,doc)=>{
     User.findOne({ _id: req.course.user},(err,author)=>{
         if(author){
             req.course.user = author
-            console.log(req.course)
 
 
         }else{}
@@ -149,18 +148,27 @@ course.save(function(err,course){
         return next(err,err.message)
     }
 
-   res.location("/courses/"+course.user)
+   res.location("/courses/")
 
     res.status(201).end();
 })
 })
 
 //edit course
-router.put("/courses/:id",authenticator,function(req,res){
+router.put("/courses/:id",authenticator,function(req,res,next){
 //204
-req.course.update(req.body,(err,results)=>{
-    if(err) return next(err)
-    res.status(204)
+req.course.updateOne(req.body,{ runValidators: true },(err,results)=>{
+    if(err){ 
+        console.log(err)
+
+        err.status=400
+        res.error = err.message
+        return next(err,err.message)
+    } else{   
+     console.log("fine")
+
+    res.location("/signIn"+req.course.user)
+    res.status(201).end()}
 })
 })
 
