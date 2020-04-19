@@ -103,8 +103,10 @@ Course.findById(id, (err,doc)=>{
             req.course.user = author
 
 
-        }else{}
-        return next()
+        }else{ 
+            return next(err)
+        }
+      
 
     })
 })
