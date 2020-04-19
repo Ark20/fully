@@ -41,6 +41,7 @@ fetch("http://localhost:5000/api/users",{ //call post with user in request body
      }
   }
 }).then( apiError => {
+  if(apiError){
    //create error string based on errors present 
   let erm = apiError.error.message.split(" ")
 let possibleErrors = ["password:","firstName:","lastName:", "emailAddress:"]
@@ -69,7 +70,7 @@ for(let i=0; i<=possibleErrors.length;i++){
   this.setState({
     error: currentErrors
   })
-}) 
+}}) 
 
 
   }

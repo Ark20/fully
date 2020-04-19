@@ -159,12 +159,15 @@ router.put("/courses/:id",authenticator,function(req,res,next){
 //204
 req.course.updateOne(req.body,{ runValidators: true },(err,results)=>{
     if(err){ 
+        console.log(req.body)
         console.log(err)
 
         err.status=400
         res.error = err.message
         return next(err,err.message)
     } else{   
+        console.log(req.body)
+
      console.log("fine")
 
     res.location("/signIn"+req.course.user)
