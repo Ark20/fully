@@ -104,9 +104,9 @@ Course.findById(id, (err,doc)=>{
 
 
         }else{ 
-            return next(err)
+         return err   
         }
-      
+        return next()
 
     })
 })
