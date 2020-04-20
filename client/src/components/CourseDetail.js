@@ -62,7 +62,7 @@ fetch(`http://localhost:5000/api/courses/${id}`).then(response=> response.json()
     return(
       <div>
         <div className="actions--bar">
-          <div className="bounds">{ cookies.get("id") === this.state.user._id?//conditionally render buttons for logged in users
+          <div className="bounds">{ cookies.get("id") === this.state.user._id ?//conditionally render buttons for logged in users
             <div className="grid-100"><span><a className="button" href={`/courses/${this.state.id}/update`}>Update Course</a><button className="button" onClick={()=> this.delete(this.state.id)}>Delete Course</button></span><a
                 className="button button-secondary" href="/courses">Return to List</a></div> :""
           } 

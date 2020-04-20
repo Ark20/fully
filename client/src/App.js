@@ -167,7 +167,7 @@ getData =()=>{
       <PrivateRoute path="/courses/create" authed={this.state.authed}><CreateCourse/></PrivateRoute>
       <PrivateRoute path="/courses/:id/update" authed={this.state.authed} component={({match}) => <UpdateCourse id={match.params.id} />}></PrivateRoute>
       <Route exact path ="/signin" component={() => <SignIn />}></Route>
-      <Route exact path ="/courses/signup" component={() => <SignUp signIn = {this.signIn} />}></Route>
+      <Route path ="/signup" component={() => <SignUp signIn = {this.signIn} />}></Route>
       <Route path ="/signout" component={() => <UserSignOut signOut = {this.signOut}/>}></Route>
       <Route exact path ="/courses/:id" component={({match}) => <CourseDetail id={match.params.id} />}></Route>
       
